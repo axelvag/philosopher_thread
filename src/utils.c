@@ -6,11 +6,24 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 14:59:18 by avaganay          #+#    #+#             */
-/*   Updated: 2023/05/18 15:52:35 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/05/30 13:59:03 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (s != 0)
+		write(fd, s, ft_strlen(s));
+}
+
+int	ft_exit(char *str)
+{
+	ft_putstr_fd("Error : ", 2);
+	ft_putstr_fd(str, 2);
+	return (0);
+}
 
 int	ft_strlen(const char *str)
 {

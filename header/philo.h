@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:26:38 by avaganay          #+#    #+#             */
-/*   Updated: 2023/05/18 15:52:52 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/05/30 14:02:07 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,21 @@ typedef struct s_arg
 typedef struct s_philo
 {
 	int		id;
+	t_arg	arg;
 }	t_philo;
 
 typedef struct s_all
 {
-	t_philo	*philo;
-	t_arg	arg;
+	t_philo			*philo;
+	t_arg			arg_all;
+	struct timeval	*time_start;
 }	t_all;
 
 int	ft_strlen(const char *str);
 int	ft_atoi(const char *str);
 int	ft_is_numeric(char **argv, int i, int j);
+int	ft_exit(char *str);
+int	ft_time_current(struct timeval *time_start);
+int	ft_pars_arg(int argc, char **argv, t_all *all);
 
 #endif

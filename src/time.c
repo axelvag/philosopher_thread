@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/22 14:43:22 by avaganay          #+#    #+#             */
-/*   Updated: 2023/05/30 14:01:54 by avaganay         ###   ########.fr       */
+/*   Created: 2023/05/30 13:58:53 by avaganay          #+#    #+#             */
+/*   Updated: 2023/05/30 13:59:07 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-int	main(int argc, char **argv)
+int	ft_time_current(struct timeval *time_start)
 {
-	t_all	all;
+	struct timeval	time_current;
 
-	if (!(ft_pars_arg(argc, argv, &all)))
-		return (ft_exit("Invalid Arguments\n"));
-	gettimeofday(all.time_start, NULL);
-	all.philo = malloc(sizeof(t_philo) * all.arg_all.number_of_philosopher);
-	if (!all.philo)
-		return (ft_exit("Malloc\n"));
-	return (0);
+	gettimeofday(&time_current, NULL);
+	return (((time_current.tv_sec - time_start->tv_sec) * 1000)
+		+ ((time_current.tv_usec - time_start->tv_usec) / 1000));
 }
