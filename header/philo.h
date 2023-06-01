@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:26:38 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/01 15:21:43 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/01 16:01:13 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct s_philo
 	int				finish;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	left_fork;
+	pthread_t		thread_id;
+	pthread_t		thread_death_id;
 }	t_philo;
 
 typedef struct s_all
@@ -54,11 +56,12 @@ typedef struct s_all
 
 /**********************************UTILS**********************************/
 
-int	ft_strlen(const char *str);
-int	ft_atoi(const char *str);
-int	ft_is_numeric(char **argv, int i, int j);
-int	ft_exit(char *str);
-int	ft_time_current(struct timeval time_start);
+int			ft_strlen(const char *str);
+int			ft_atoi(const char *str);
+int			ft_is_numeric(char **argv, int i, int j);
+int			ft_exit(char *str);
+long int	ft_time_current(struct timeval time_start);
+int	ft_thread(t_all *all);
 
 /**********************************INIT**********************************/
 

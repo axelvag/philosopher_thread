@@ -19,7 +19,7 @@ OBJECTS								= $(SRC:%.c=$(BUILD_DIR)%.o)
 LIBFT								= libft.a
 LIB_DIR								= libft/
 
-GCC									= gcc
+GCC									= gcc -pthread
 
 CFLAGS								= -Wall -Werror -Wextra
 
@@ -41,7 +41,7 @@ lib:
 $(NAME):							$(OBJECTS)
 										@$(GCC) $(OBJECTS) -o $(NAME) $(LIB_DIR)$(LIBFT)
 										@echo "$(GREEN)[LIBFT OK] $(END)"
-										@echo "$(PURPLE)[PIPEX IS READY] $(END)"
+										@echo "$(PURPLE)[PHILO IS READY] $(END)"
 										
 clean:							
 										@$(RM) $(OBJECTS)
