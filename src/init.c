@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 14:58:51 by avaganay          #+#    #+#             */
-/*   Updated: 2023/05/30 15:00:01 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/01 15:22:08 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,17 @@ int	ft_init(t_all *all)
 	while (i < all->arg_all.number_of_philosopher)
 	{
 		all->philo[i].id = i + 1;
-		// all->philo[i].ms_eat = all->time_start->tv_sec;
+		all->philo[i].ms_eat = ft_time_current(all->time_start);
 		all->philo[i].nb_eat = 0;
 		all->philo[i].finish = 0;
-		all->philo[i].r_f = NULL;
-		pthread_mutex_init(&all->philo[i].l_f, NULL);
+		all->philo[i].right_fork = NULL;
+		pthread_mutex_init(&all->philo[i].left_fork, NULL);
 		if (all->arg_all.number_of_philosopher == 1)
 			return (1);
 		if (i == all->arg_all.number_of_philosopher - 1)
-			all->philo[i].r_f = &all->philo[0].l_f;
+			all->philo[i].right_fork = &all->philo[0].left_fork;
 		else
-			all->philo[i].r_f = &all->philo[i + 1].l_f;
+			all->philo[i].right_fork = &all->philo[i + 1].left_fork;
 		i++;
 	}
 	return (1);
