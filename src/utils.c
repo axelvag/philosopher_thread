@@ -6,13 +6,13 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 14:59:18 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/02 15:12:58 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:36:57 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-void	write_status(char *str, t_philo *philo)
+void	ft_write_status(char *str, t_philo *philo)
 {
 	long int		time;
 

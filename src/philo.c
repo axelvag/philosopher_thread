@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 14:43:22 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/02 15:33:32 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:38:07 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	*ft_routine(void *data)
 	// 	printf("Philo %d: %d\n", philo->id, i);
 	while (!ft_is_dead(philo, 0))
 	{
-		
+		ft_write_status("thinking\n", philo);
 		if ((ft_time_total() - philo->ms_eat)
 			>= (long)(philo->arg->time_to_die))
 		{

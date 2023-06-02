@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:58:53 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/02 15:22:51 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:36:29 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@ long int	ft_time_total(void)
 		ft_exit("Gettimeofday returned -1\n");
 	time = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
 	return (time);
+}
+
+void	ft_usleep(long int time_in_ms)
+{
+	long int	start_time;
+
+	start_time = 0;
+	start_time = ft_time_total();
+	while ((ft_time_total() - start_time) < time_in_ms)
+		usleep(time_in_ms / 10);
 }
 
 long int	ft_time_current(struct timeval time_start)

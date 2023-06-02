@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:26:38 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/02 15:22:59 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:37:50 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int			ft_exit(char *str);
 long int	ft_time_current(struct timeval time_start);
 long int	ft_time_total(void);
 int			ft_is_dead(t_philo *philo, int i);
-void		write_status(char *str, t_philo *philo);
+void		ft_write_status(char *str, t_philo *philo);
 
 /**********************************INIT**********************************/
 
