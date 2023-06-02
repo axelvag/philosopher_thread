@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 14:43:22 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/01 16:08:59 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/02 12:52:56 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,14 @@
 
 void	*thread(void *data)
 {
-	int		i;
-	int		j;
 	t_philo	*philo;
+	int	i;
 
 	philo = (t_philo *)data;
 	i = 0;
-	while (i < 2)
-	{
-		while (j < 10)
-		{
-			j = 0;
-			printf("Philo %d: %d\n", philo[i].id, j);
-			j++;
-		}
-		i++;
-	}
-	pthread_exit(NULL);
+	while (i++ < 10)
+		printf("Philo %d: %d\n", philo->id, i);
+	return (NULL);
 }
 
 int	ft_thread(t_all *all)
@@ -44,6 +35,8 @@ int	ft_thread(t_all *all)
 		if (pthread_create(&all->philo[i].thread_id, NULL, thread,
 				&all->philo[i]) != 0)
 			return (ft_exit("Error: pthread_create\n"));
+		pthread_join(all->philo[i].thread_id, NULL);
+		usleep(50);
 		i++;
 	}
 	return (1);
