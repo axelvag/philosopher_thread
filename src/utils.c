@@ -6,11 +6,25 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 14:59:18 by avaganay          #+#    #+#             */
-/*   Updated: 2023/05/30 13:59:03 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:12:58 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
+
+void	write_status(char *str, t_philo *philo)
+{
+	long int		time;
+
+	time = -1;
+	time = ft_time_current(philo->arg->time_start);
+	usleep(200 * 1000);
+	if (time >= 0 && time <= 2147483647 && !ft_is_dead(philo, 0))
+	{
+		printf("%ld ", time);
+		printf("Philo %d %s", philo->id, str);
+	}
+}
 
 void	ft_putstr_fd(char *s, int fd)
 {

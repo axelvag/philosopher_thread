@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 14:58:51 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/01 16:03:06 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:45:25 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	ft_pars_arg(int argc, char **argv, t_all *all)
 {
 	if ((argc == 5 || argc == 6) && ft_is_numeric(argv, 0, 1))
 	{
+		all->arg_all.end = 0;
 		all->arg_all.number_of_philosopher = ft_atoi(argv[1]);
 		all->arg_all.time_to_die = ft_atoi(argv[2]);
 		all->arg_all.time_to_eat = ft_atoi(argv[3]);
@@ -34,24 +35,19 @@ int	ft_pars_arg(int argc, char **argv, t_all *all)
 	return (0);
 }
 
-void	init_mutex(t_all *all)
-{
-	pthread_mutex_init(&all->arg_all.write_mutex, NULL);
-	pthread_mutex_init(&all->arg_all.dead, NULL);
-	pthread_mutex_init(&all->arg_all.time_eat, NULL);
-	pthread_mutex_init(&all->arg_all.finish, NULL);
-}
-
 int	ft_init(t_all *all)
 {
 	int	i;
 
 	i = 0;
-	init_mutex(all);
+	pthread_mutex_init(&all->arg_all.write_mutex, NULL);
+	pthread_mutex_init(&all->arg_all.dead, NULL);
+	pthread_mutex_init(&all->arg_all.time_eat, NULL);
+	pthread_mutex_init(&all->arg_all.finish, NULL);
 	while (i < all->arg_all.number_of_philosopher)
 	{
 		all->philo[i].id = i + 1;
-		all->philo[i].ms_eat = ft_time_current(all->time_start);
+		all->philo[i].ms_eat = ft_time_current(all->arg_all.time_start);
 		all->philo[i].nb_eat = 0;
 		all->philo[i].finish = 0;
 		all->philo[i].right_fork = NULL;

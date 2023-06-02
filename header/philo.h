@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:26:38 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/01 16:01:13 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:22:59 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@
 
 typedef struct s_arg
 {
+	struct timeval	time_start;
 	int				number_of_philosopher;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				number_of_times_each_philosopher_must_eat;
+	int				end;
+	int				nb_p_finish;
 	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	dead;
 	pthread_mutex_t	time_eat;
@@ -49,10 +52,13 @@ typedef struct s_all
 {
 	t_philo			*philo;
 	t_arg			arg_all;
-	struct timeval	time_start;
 	int				nb_philo_finish;
 	int				end;
 }	t_all;
+
+/**********************************ROUTINE**********************************/
+
+int			ft_thread(t_all *all);
 
 /**********************************UTILS**********************************/
 
@@ -61,11 +67,13 @@ int			ft_atoi(const char *str);
 int			ft_is_numeric(char **argv, int i, int j);
 int			ft_exit(char *str);
 long int	ft_time_current(struct timeval time_start);
-int	ft_thread(t_all *all);
+long int	ft_time_total(void);
+int			ft_is_dead(t_philo *philo, int i);
+void		write_status(char *str, t_philo *philo);
 
 /**********************************INIT**********************************/
 
-int	ft_init(t_all *all);
-int	ft_pars_arg(int argc, char **argv, t_all *all);
+int			ft_init(t_all *all);
+int			ft_pars_arg(int argc, char **argv, t_all *all);
 
 #endif
