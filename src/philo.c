@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 14:43:22 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/05 09:26:13 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/05 10:17:14 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,15 @@ int	ft_thread(t_all *all)
 		if (pthread_create(&all->philo[i].thread_id, NULL, ft_routine,
 				&all->philo[i]) != 0)
 			return (ft_exit("Error: pthread_create\n"));
-		pthread_join(all->philo[i].thread_id, NULL);
 		if (all->philo[i].finish == 1)
 			return (1);
 		usleep(50);
+		i++;
+	}
+	i = 0;
+	while (i < all->arg_all.number_of_philosopher)
+	{
+		pthread_join(all->philo[i].thread_id, NULL);
 		i++;
 	}
 	return (1);
