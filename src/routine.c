@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 09:19:00 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/05 11:30:14 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:24:00 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,36 @@ void	ft_take_fork(t_philo *philo)
 		ft_usleep(philo->ms_eat * 2);
 		return ;
 	}
-	// pthread_mutex_lock(&(philo->arg->write_mutex));
+	pthread_mutex_lock(&(philo->arg->write_mutex));
 	ft_write_status("has taken a fork\n", philo);
 	ft_write_status("has taken a fork\n", philo);
-	// pthread_mutex_unlock(&(philo->arg->write_mutex));
+	pthread_mutex_unlock(&(philo->arg->write_mutex));
+}
+
+void	ft_sleep(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->arg->write_mutex);
+	ft_write_status("is sleeping\n", philo);
+	pthread_mutex_unlock(&philo->arg->write_mutex);
+	usleep(philo->arg->time_to_sleep * 1000);
+}
+
+void	ft_think(t_philo *philo)
+{
+	if (ft_time_current(philo->arg->time_start) <= philo->arg->time_to_eat)
+		return ;
+	pthread_mutex_lock(&philo->arg->write_mutex);
+	ft_write_status("is thinking\n", philo);
+	pthread_mutex_unlock(&philo->arg->write_mutex);
 }
 
 void	ft_eat(t_philo *philo)
 {
-	
 	if (ft_time_current(philo->arg->time_start) <= philo->arg->time_to_eat)
 		return ;
-	// pthread_mutex_lock(&philo->arg->write_mutex);
+	pthread_mutex_lock(&philo->arg->write_mutex);
 	ft_write_status("is eating\n", philo);
-	// pthread_mutex_unlock(&philo->arg->write_mutex);
+	pthread_mutex_unlock(&philo->arg->write_mutex);
 	philo->ms_eat = ft_time_total();
 	ft_usleep(philo->arg->time_to_eat);
 	pthread_mutex_unlock(&(philo->left_fork));
@@ -75,9 +91,13 @@ void	*ft_routine(void *data)
 		// printf("ICI%d\n", philo->id);
 		ft_take_fork(philo);
 		ft_eat(philo);
-		ft_write_status("is sleeping\n", philo);
-		usleep(philo->arg->time_to_sleep * 1000);
-		ft_write_status("is thinking\n", philo);
+		//////////////////////////////////////ft_spleep
+		// ft_write_status("is sleeping\n", philo);
+		// usleep(philo->arg->time_to_sleep * 1000);
+		ft_sleep(philo);
+		/////////////////////////////////////////////ft_think
+		// ft_write_status("is thinking\n", philo);
+		ft_think(philo);
 		if ((ft_time_total() - philo->ms_eat > philo->arg->time_to_die)
 			>= (long)(philo->arg->time_to_die))
 		{
