@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:26:38 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/02 15:37:50 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/05 09:22:16 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_all
 /**********************************ROUTINE**********************************/
 
 int			ft_thread(t_all *all);
+void		*ft_routine(void *data);
 
 /**********************************UTILS**********************************/
 
@@ -70,6 +71,7 @@ long int	ft_time_current(struct timeval time_start);
 long int	ft_time_total(void);
 int			ft_is_dead(t_philo *philo, int i);
 void		ft_write_status(char *str, t_philo *philo);
+void		ft_usleep(long int time_in_ms);
 
 /**********************************INIT**********************************/
 
