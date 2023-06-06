@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 09:19:00 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/06 13:54:09 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/06 15:40:36 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ void	ft_sleep(t_philo *philo)
 {
 	// if (ft_time_current(philo->arg->time_start) <= philo->arg->time_to_eat)
 	// 	return ;
+	// printf("DEBUT %d: %ld\n", philo->id, ft_time_total() - philo->ms_eat);
+	// printf("FIN %d: %d\n", philo->id,philo->arg->time_to_eat + philo->arg->time_to_sleep);
+	// if (ft_time_total() - philo->ms_eat > philo->arg->time_to_eat + philo->arg->time_to_sleep)
 	if (philo->arg->time_to_die < philo->arg->time_to_sleep)
 	{
 		ft_usleep(philo->arg->time_to_die + 1);
@@ -56,10 +59,18 @@ void	ft_sleep(t_philo *philo)
 		pthread_mutex_unlock(&philo->arg->write_mutex);
 		philo->arg->end = 1;
 	}
+	if (philo->arg->time_to_die < philo->arg->time_to_eat + philo->arg->time_to_sleep)
+	{
+		ft_usleep(philo->arg->time_to_die - philo->arg->time_to_eat);
+		pthread_mutex_lock(&philo->arg->write_mutex);
+		ft_write_status("is dead\n", philo);
+		pthread_mutex_unlock(&philo->arg->write_mutex);
+		philo->arg->end = 1;
+	}
 	pthread_mutex_lock(&philo->arg->write_mutex);
 	ft_write_status("is sleeping\n", philo);
 	pthread_mutex_unlock(&philo->arg->write_mutex);
-	usleep((philo->arg->time_to_sleep + 1) * 1000);
+	usleep((philo->arg->time_to_sleep) * 1000);
 }
 
 void	ft_think(t_philo *philo)
@@ -106,6 +117,15 @@ void	*ft_routine(void *data)
 	// i = 0;
 	// while (i++ < 10)
 	// 	printf("Philo %d: %d\n", philo->id, i);
+	if (philo->arg->number_of_philosopher == 1)
+	{
+		pthread_mutex_lock(&(philo->arg->write_mutex));
+		ft_write_status("has taken a fork\n", philo);
+		ft_usleep(philo->arg->time_to_die);
+		ft_write_status("is dead\n", philo);
+		pthread_mutex_unlock(&(philo->arg->write_mutex));
+		return (NULL);
+	}
 	while (!ft_is_dead(philo, 0) && philo->finish == 0 && philo->arg->end == 0)
 	{
 		// printf("ICI%d\n", philo->id);
