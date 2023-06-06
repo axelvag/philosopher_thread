@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 14:43:22 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/05 10:17:14 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/06 13:27:41 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_thread(t_all *all)
 			return (ft_exit("Error: pthread_create\n"));
 		if (all->philo[i].finish == 1)
 			return (1);
-		usleep(50);
+		// usleep(50);
 		i++;
 	}
 	i = 0;

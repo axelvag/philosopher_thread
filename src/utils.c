@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 14:59:18 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/02 15:36:57 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/06 13:26:50 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void	ft_write_status(char *str, t_philo *philo)
 
 	time = -1;
 	time = ft_time_current(philo->arg->time_start);
-	usleep(200 * 1000);
+	// usleep(200000);
+	if (philo->arg->end == 1)
+		return ;
 	if (time >= 0 && time <= 2147483647 && !ft_is_dead(philo, 0))
 	{
 		printf("%ld ", time);
