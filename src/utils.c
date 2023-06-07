@@ -6,32 +6,11 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 14:59:18 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/07 15:39:24 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/07 16:30:42 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
-
-void	ft_write_status(char *str, t_philo *philo)
-{
-	long int		time;
-
-	time = -1;
-	time = ft_time_current(philo->arg->time_start);
-	// usleep(200000);
-	pthread_mutex_lock(&philo->arg->dead);
-	if (philo->arg->end == 1)
-	{
-		pthread_mutex_unlock(&philo->arg->dead);
-		return ;
-	}
-	pthread_mutex_unlock(&philo->arg->dead);
-	if (time >= 0 && time <= 2147483647 && !ft_is_dead(philo, 0))
-	{
-		printf("%ld ", time);
-		printf("Philo %d %s", philo->id, str);
-	}
-}
 
 void	ft_putstr_fd(char *s, int fd)
 {

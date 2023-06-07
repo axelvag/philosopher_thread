@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 14:43:22 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/07 15:40:30 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/07 16:20:45 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	ft_thread(t_all *all)
 			return (1);
 		}
 		pthread_mutex_unlock(&all->philo[i].arg->finish);
-		// usleep(50);
 		i++;
 	}
 	i = 0;
@@ -58,12 +57,3 @@ int	main(int argc, char **argv)
 		return (free(all.philo), 0);
 	return (0);
 }
-
-// int	main(void)
-// {
-// 	t_all	all;
-
-// 	gettimeofday(&all.time_start, NULL);
-// 	printf("%d\n", ft_time_current(all.time_start));
-// 	return (0);
-// }
