@@ -19,7 +19,7 @@ OBJECTS								= $(SRC:%.c=$(BUILD_DIR)%.o)
 LIBFT								= libft.a
 LIB_DIR								= libft/
 
-GCC									= gcc -pthread
+GCC									= gcc -pthread -g3 -fsanitize=thread
 
 CFLAGS								= -Wall -Werror -Wextra
 

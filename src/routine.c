@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 09:19:00 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/06 15:40:36 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/07 15:48:00 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,23 @@ void	ft_all_philo_eat(t_philo *philo)
 void	ft_take_fork(t_philo *philo)
 {
 	// printf("Prend fork:%d\n", philo->id);
-	pthread_mutex_lock(&(philo->left_fork));
-	// printf("A pris fork:%d\n", philo->id);
+	if (philo->id == philo->arg->number_of_philosopher)
+		pthread_mutex_lock((philo->right_fork));
+	else
+		pthread_mutex_lock(&(philo->left_fork));
 	pthread_mutex_lock(&(philo->arg->write_mutex));
 	ft_write_status("has taken a fork\n", philo);
 	pthread_mutex_unlock(&(philo->arg->write_mutex));
+	// printf("A pris fork:%d\n", philo->id);
 	if (philo->arg->number_of_philosopher == 1)
 	{
 		ft_usleep(philo->ms_eat * 2);
 		return ;
 	}
-	pthread_mutex_lock((philo->right_fork));
+	if (philo->id == philo->arg->number_of_philosopher)
+		pthread_mutex_lock(&(philo->left_fork));
+	else
+		pthread_mutex_lock((philo->right_fork));
 	pthread_mutex_lock(&(philo->arg->write_mutex));
 	ft_write_status("has taken a fork\n", philo);
 	pthread_mutex_unlock(&(philo->arg->write_mutex));
@@ -57,19 +63,26 @@ void	ft_sleep(t_philo *philo)
 		pthread_mutex_lock(&philo->arg->write_mutex);
 		ft_write_status("is dead\n", philo);
 		pthread_mutex_unlock(&philo->arg->write_mutex);
+		pthread_mutex_lock(&philo->arg->dead);
 		philo->arg->end = 1;
+		pthread_mutex_unlock(&philo->arg->dead);
+		return ;
 	}
-	if (philo->arg->time_to_die < philo->arg->time_to_eat + philo->arg->time_to_sleep)
+	pthread_mutex_lock(&philo->arg->write_mutex);
+	ft_write_status("is sleeping\n", philo);
+	pthread_mutex_unlock(&philo->arg->write_mutex);
+	if (philo->arg->time_to_die < philo->arg->time_to_eat
+		+ philo->arg->time_to_sleep || (philo->arg->number_of_philosopher
+			% 2 != 0 && philo->arg->time_to_die < philo->arg->time_to_eat * 3))
 	{
 		ft_usleep(philo->arg->time_to_die - philo->arg->time_to_eat);
 		pthread_mutex_lock(&philo->arg->write_mutex);
 		ft_write_status("is dead\n", philo);
 		pthread_mutex_unlock(&philo->arg->write_mutex);
+		pthread_mutex_lock(&philo->arg->dead);
 		philo->arg->end = 1;
+		pthread_mutex_unlock(&philo->arg->dead);
 	}
-	pthread_mutex_lock(&philo->arg->write_mutex);
-	ft_write_status("is sleeping\n", philo);
-	pthread_mutex_unlock(&philo->arg->write_mutex);
 	usleep((philo->arg->time_to_sleep) * 1000);
 }
 
@@ -86,6 +99,9 @@ void	ft_eat(t_philo *philo)
 {
 	// if (ft_time_current(philo->arg->time_start) <= philo->arg->time_to_eat)
 	// 	return ;
+	pthread_mutex_lock(&philo->arg->write_mutex);
+	ft_write_status("is eating\n", philo);
+	pthread_mutex_unlock(&philo->arg->write_mutex);
 	if (philo->arg->time_to_die < philo->arg->time_to_eat)
 	{
 		ft_usleep(philo->arg->time_to_die + 1);
@@ -93,15 +109,24 @@ void	ft_eat(t_philo *philo)
 		ft_write_status("is dead\n", philo);
 		pthread_mutex_unlock(&philo->arg->write_mutex);
 		philo->arg->end = 1;
+		// return ;
 	}
-	pthread_mutex_lock(&philo->arg->write_mutex);
-	ft_write_status("is eating\n", philo);
-	pthread_mutex_unlock(&philo->arg->write_mutex);
+	// pthread_mutex_lock(&philo->arg->write_mutex);
+	// ft_write_status("is eating\n", philo);
+	// pthread_mutex_unlock(&philo->arg->write_mutex);
 	philo->ms_eat = ft_time_total();
 	ft_usleep(philo->arg->time_to_eat);
-	pthread_mutex_unlock(&(philo->left_fork));
+	if (philo->id == philo->arg->number_of_philosopher)
+	{
+		pthread_mutex_unlock((philo->right_fork));
+		pthread_mutex_unlock(&(philo->left_fork));
+	}
+	else
+	{
+		pthread_mutex_unlock(&(philo->left_fork));
+		pthread_mutex_unlock((philo->right_fork));
+	}
 	// printf("A pose fork:%d\n", philo->id);
-	pthread_mutex_unlock((philo->right_fork));
 	// printf("A pose fork:%d\n", philo->id);
 }
 
@@ -126,7 +151,7 @@ void	*ft_routine(void *data)
 		pthread_mutex_unlock(&(philo->arg->write_mutex));
 		return (NULL);
 	}
-	while (!ft_is_dead(philo, 0) && philo->finish == 0 && philo->arg->end == 0)
+	while (!ft_is_dead(philo, 0) && philo->finish == 0) //&& philo->arg->end == 0) 
 	{
 		// printf("ICI%d\n", philo->id);
 		ft_take_fork(philo);
