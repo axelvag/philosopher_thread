@@ -16,47 +16,38 @@ SRC									= 	philo.c	init.c	utils.c	time.c	routine.c
 
 OBJECTS								= $(SRC:%.c=$(BUILD_DIR)%.o)
 
-LIBFT								= libft.a
-LIB_DIR								= libft/
-
 GCC									= gcc -pthread -g3 -fsanitize=thread
 
 CFLAGS								= -Wall -Werror -Wextra
 
 RM									= rm -rf
 
-$(BUILD_DIR)%.o:					$(DIR)%.c $(HEADER_DIR)* ${LIB_DIR}*.c ${LIB_DIR}/${LIB_HEADER} ${LIB_DIR} Makefile 
+$(BUILD_DIR)%.o:					$(DIR)%.c $(HEADER_DIR)*  Makefile 
 										@mkdir -p $(@D)
-										$(GCC) $(CFLAGS) -I$(HEADER_DIR) -I$(LIB_DIR) -c $< -o $@
+										$(GCC) $(CFLAGS) -I$(HEADER_DIR) -c $< -o $@
 
 all:								mkbuild lib $(HEADER_DIR) $(NAME)
 
 mkbuild:							
 										@mkdir -p build
-
-lib:								
-										@make -C $(LIB_DIR)
 										
 
 $(NAME):							$(OBJECTS)
-										@$(GCC) $(OBJECTS) -o $(NAME) $(LIB_DIR)$(LIBFT)
-										@echo "$(GREEN)[LIBFT OK] $(END)"
+										@$(GCC) $(OBJECTS) -o $(NAME)
 										@echo "$(PURPLE)[PHILO IS READY] $(END)"
 										
 clean:							
 										@$(RM) $(OBJECTS)
-										@make clean -C $(LIB_DIR)
 										@$(RM) $(BUILD_DIR)
 										@echo "$(GREEN)[CLEAN DONE] $(END)"
 
 fclean:								clean
 										@$(RM) $(NAME) 
-										@make fclean -C $(LIB_DIR)
 										@echo "$(GREEN)[FCLEAN DONE] $(END)"
 
 norm:								
 										@echo "$(GREEN)[CHECKING NORMINETTE]$(END)"
-										@norminette $(DIR) $(HEADER_DIR) $(LIB_DIR)
+										@norminette $(DIR) $(HEADER_DIR)
 
 re:									fclean all
 										@$(MAKE) all -silent
