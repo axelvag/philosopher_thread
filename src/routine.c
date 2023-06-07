@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 09:19:00 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/07 15:48:00 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/07 15:57:47 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,26 @@ void	ft_eat(t_philo *philo)
 	pthread_mutex_lock(&philo->arg->write_mutex);
 	ft_write_status("is eating\n", philo);
 	pthread_mutex_unlock(&philo->arg->write_mutex);
+	if (philo->arg->time_to_die > philo->arg->time_to_eat &&
+		philo->arg->time_to_die < philo->arg->time_to_sleep)
+	{
+		ft_usleep(philo->arg->time_to_die + 1);
+		pthread_mutex_lock(&philo->arg->write_mutex);
+		ft_write_status("is dead\n", philo);
+		pthread_mutex_unlock(&philo->arg->write_mutex);
+		pthread_mutex_lock(&philo->arg->dead);
+		philo->arg->end = 1;
+		pthread_mutex_unlock(&philo->arg->dead);
+	}
 	if (philo->arg->time_to_die < philo->arg->time_to_eat)
 	{
 		ft_usleep(philo->arg->time_to_die + 1);
 		pthread_mutex_lock(&philo->arg->write_mutex);
 		ft_write_status("is dead\n", philo);
 		pthread_mutex_unlock(&philo->arg->write_mutex);
+		pthread_mutex_lock(&philo->arg->dead);
 		philo->arg->end = 1;
+		pthread_mutex_unlock(&philo->arg->dead);
 		// return ;
 	}
 	// pthread_mutex_lock(&philo->arg->write_mutex);
