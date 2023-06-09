@@ -6,7 +6,7 @@
 /*   By: avaganay <avaganay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 14:26:38 by avaganay          #+#    #+#             */
-/*   Updated: 2023/06/05 09:22:16 by avaganay         ###   ########.fr       */
+/*   Updated: 2023/06/09 11:46:07 by avaganay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ typedef struct s_all
 
 int			ft_thread(t_all *all);
 void		*ft_routine(void *data);
+void		ft_take_fork(t_philo *philo);
+void		ft_sleep(t_philo *philo);
+void		ft_think(t_philo *philo);
+void		ft_eat(t_philo *philo);
 
 /**********************************UTILS**********************************/
 

@@ -12,7 +12,7 @@ HEADER_DIR							= header/
 HEADER_FILE							= philo.h
 
 DIR									= src/
-SRC									= 	philo.c	init.c	utils.c	time.c	routine.c
+SRC									= 	philo.c	init.c	utils.c	time.c	routine.c	activity.c
 
 OBJECTS								= $(SRC:%.c=$(BUILD_DIR)%.o)
 
