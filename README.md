@@ -4,6 +4,18 @@
 - Each philosopher should be a ***thread***.
 - One fork between each philosopher, therefore if they are multiple philosophers, there will be a fork at the right and the left of each philosopher.
 - To avoid philosophers duplicating forks, you should protect the forks state with a ***mutex*** for each of them.
+
+# Starting
+
+Clone this repo
+```
+$ git clone https://github.com/axelvag/philosopher_thread
+
+$ cd philosopher_thread
+
+$ cd philo
+```
+
 ## Compilation
 ```
 make
